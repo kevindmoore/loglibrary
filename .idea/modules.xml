@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidLogging.iml" filepath="$PROJECT_DIR$/AndroidLogging.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loglibrary/loglibrary.iml" filepath="$PROJECT_DIR$/loglibrary/loglibrary.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+    compileSdkVersion parent.ext.androidCompileSdkVersion
+    buildToolsVersion parent.ext.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion parent.ext.androidMinSdkVersion
+        targetSdkVersion parent.ext.androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile "com.google.code.gson:gson:2.4"
+}
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+}
+generateJavadocsJar.dependsOn generateJavadocs
+
+artifacts {
+    archives generateJavaDocsJar
+    archives generateSourcesJar
+}
+bintray {
+    user = 'kevindmoore'
+    key = '203ce8bb496c686f09b9bd80963e7991f3798eb6'
+    pkg {
+        repo = 'maven'
+        name = 'com.github.hathibelagal.mylittlelibrary'
+
+        version {
+            name = '1.0.1-tuts'
+            desc = 'My test upload'
+            released  = new Date()
+            vcsTag = '1.0.1'
+        }
+
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/hathibelagal/LibraryTutorial.git'
+        websiteUrl = 'https://github.com/hathibelagal/LibraryTutorial'
+    }
+    configurations = ['archives']
+}
