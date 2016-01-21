@@ -86,7 +86,7 @@ public class TimerHelper {
 	}
 
 	/**
-	 * Cancel & reschedule
+	 * Cancel and reschedule
 	 */
 	public void reset() {
 		if (delay != -1) {

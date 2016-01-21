@@ -37,17 +37,28 @@ public class JSONData {
 	public JSONData() {
 	}
 
+	/**
+	 * Constructor
+	 * @param name - key
+	 * @param value - value pair
+	 */
 	public JSONData(String name, Object value) {
 		this.name = name;
 		this.value = value;
 	}
 
+	/**
+	 * Constructor
+	 * @param json string
+	 * @throws JSONDataException
+	 */
 	public JSONData(String json) throws JSONDataException {
 		parse(json);
 	}
 
 	/**
 	 * Parse a JSONObject recursively.
+	 * @param json - parse json string an put it into our classes
 	 */
 	public void parse(String json) throws JSONDataException {
 		try {
@@ -77,45 +88,19 @@ public class JSONData {
 		}
 	}
 
-	// TODO - NOTE. These were failed attempts to try and do the gson stuff myself
 	/**
 	 * Convert an object to a json string
-	 * @param object
-	 * @return
+	 * @param object any object
+	 * @return json
 	 */
 	public static String convertToJSON(Object object) {
 		return new Gson().toJson(object);
-/*
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("{");
-		ArrayList<Field> allFields = UtilReflector.getAllFields(object.getClass());
-		int fieldCount = allFields.size();
-		int fieldCounter = 0;
-		for (Field field : allFields) {
-			field.setAccessible(true);
-			try {
-				if (isNull(field.get(object))) {
-					fieldCounter++;
-					continue;
-				}
-			} catch (IllegalAccessException e) {
-			}
-			stringBuilder.append("\"").append(field.getName()).append("\" : ");
-			stringBuilder.append(parseField(field, object));
-			if (fieldCounter + 1 < fieldCount) {
-				stringBuilder.append(",");
-			}
-			fieldCounter++;
-		}
-		stringBuilder.append("}");
-		return stringBuilder.toString();
-*/
 	}
 
 	/**
 	 * Convert a list to a string representation
-	 * @param listObject
-	 * @return
+	 * @param listObject - generic list
+	 * @return json
 	 */
 	public static String convertList(List listObject) {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -139,7 +124,7 @@ public class JSONData {
 
 	/**
 	 * Convert a map to a string representation
-	 * @param map
+	 * @param map - generic map
 	 * @return String
 	 */
 	public static String convertMap(Map map) {
@@ -165,9 +150,9 @@ public class JSONData {
 
 	/**
 	 * Return the string value of the field
-	 * @param field
-	 * @param object
-	 * @return
+	 * @param field - Java Field
+	 * @param object - Primitive class
+	 * @return parse individule object
 	 */
 	protected static String parseField(Field field, Object object) {
 		Class<?> fieldType = field.getType();
@@ -205,42 +190,19 @@ public class JSONData {
 
 	/**
 	 * Convert a json string to an object
-	 * @param json
-	 * @param type
+	 * @param json - json
+	 * @param type - class
 	 * @return new Object
 	 */
 	public static Object convertFromJSON(String json, Class type) {
 		return new Gson().fromJson(json, type);
-/*
-		try {
-			Object returnValue = type.newInstance();
-			JSONData jsonData = new JSONData(json);
-			ArrayList<Field> allFields = UtilReflector.getAllFields(type);
-			List<JSONData> jsonChildren = jsonData.getChildren();
-			for (JSONData jsonChild : jsonChildren) {
-				Field field = findField(allFields, jsonChild.getName());
-				if (field != null) {
-					field.setAccessible(true);
-					setField(field, returnValue, jsonChild);
-				}
-			}
-			return returnValue;
-		} catch (InstantiationException e) {
-			Logger.error("Problems parsing JSON item for " + json, e);
-		} catch (IllegalAccessException e) {
-			Logger.error("Problems parsing JSON item for " + json, e);
-		} catch (JSONDataException e) {
-			Logger.error("Problems parsing JSON item for " + json, e);
-		}
-		return null;
-*/
 	}
 
 	/**
 	 * Find the field that matches the one with this name
-	 * @param allFields
-	 * @param fieldName
-	 * @return
+	 * @param allFields - list of fields
+	 * @param fieldName - specific field name
+	 * @return Field
 	 */
 	protected static Field findField(ArrayList<Field> allFields, String fieldName) {
 		for (Field field : allFields) {
@@ -254,7 +216,7 @@ public class JSONData {
 	/**
 	 * Check to see if the object is null
 	 * @param object
-	 * @return
+	 * @return boolean
 	 */
 	protected static boolean isNull(Object object) {
 		if (object == null) {

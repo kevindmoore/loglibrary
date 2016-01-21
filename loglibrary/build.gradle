@@ -36,29 +36,70 @@ task generateJavadocs(type: Javadoc) {
     classpath += project.files(android.getBootClasspath()
             .join(File.pathSeparator))
 }
+
+task generateJavadocsJar(type: Jar) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
 generateJavadocsJar.dependsOn generateJavadocs
 
 artifacts {
-    archives generateJavaDocsJar
+    archives generateJavadocsJar
     archives generateSourcesJar
 }
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'loglibrary'
+            description 'A library for handling Android Logging'
+            url 'https://github.com/kevindmoore/loglibrary'
+            inceptionYear '2016'
+
+            packaging 'aar'
+            groupId 'com.mastertechsoftware.logging'
+            artifactId 'loglibrary'
+            version '1.0.0'
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection 'https://github.com/kevindmoore/loglibrary.git'
+                url 'https://github.com/kevindmoore/loglibrary'
+
+            }
+            developers {
+                developer {
+                    name 'Kevin Moore'
+                }
+            }
+        }
+    }
+}
+
+
+
+group = 'com.mastertechsoftware.logging'
+version = '1.0.0'
+
 bintray {
-    user = 'kevindmoore'
-    key = '203ce8bb496c686f09b9bd80963e7991f3798eb6'
+    user = parent.ext.bintray_user
+    key = parent.ext.bintray_key
+    dryRun = false //Whether to run this as dry-run, without deploying
     pkg {
         repo = 'maven'
-        name = 'com.github.hathibelagal.mylittlelibrary'
+        name = 'loglibrary'
 
-        version {
-            name = '1.0.1-tuts'
-            desc = 'My test upload'
-            released  = new Date()
-            vcsTag = '1.0.1'
-        }
-
+        labels = ['android']
         licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/hathibelagal/LibraryTutorial.git'
-        websiteUrl = 'https://github.com/hathibelagal/LibraryTutorial'
+        vcsUrl = 'https://github.com/kevindmoore/loglibrary.git'
+        websiteUrl = 'https://github.com/kevindmoore/loglibrary'
     }
     configurations = ['archives']
 }
