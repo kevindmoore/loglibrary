@@ -26,18 +26,13 @@ public class Logger {
 	public static final String MAX_LOG_LINES = "maxLogLines";
 	public static final String CLASSES = "classes";
 	public static final String CLASS_NAME = "className";
-	public static final String VERBOSE = "VERBOSE";
-	public static final String DEBUG = "debug";
-	public static final String INFO = "INFO";
-	public static final String WARNING = "Warning";
-	public static final String ERROR = "ERROR";
-	public static final String WTF = "WTF";
 	public static final String LOGGING = "logging";
 	public static final String ENABLED = "enabled";
 	public static final String DISABLED = "disabled";
 	public static final String CATEGORY = "category";
 	public static final String CATEGORIES = "Categories";
 	public static final String NAME = "name";
+	public static final String LOG_TO_DISK = "logToDisk";
 
 	public enum TYPE {
 		INFO,
@@ -56,6 +51,10 @@ public class Logger {
 	private static boolean debuggingDisabled = false;
 	private static boolean addClassNameToMessage = false;
 
+	/**
+	 * To setup Logging from a json file. See Readme.
+	 * @param json
+	 */
 	public static void readConfiguration(String json) {
 		try {
 			JSONData jsonData = new JSONData(json);
@@ -75,6 +74,9 @@ public class Logger {
 				}
 				if (setup.has(MAX_LOG_LINES)) {
 					SDLogger.setMaxLogLines(setup.getChildInt(MAX_LOG_LINES));
+				}
+				if (setup.has(LOG_TO_DISK)) {
+					SDLogger.setLogToDisk(setup.getBooleanValue());
 				}
 			}
 			if (jsonData.has(CATEGORIES)) {
@@ -128,7 +130,15 @@ public class Logger {
 		}
 	}
 
-    /**
+	/**
+	 * Turn disk logging on/off
+	 * @param logToDisk
+	 */
+	public static void setLogToDisk(boolean logToDisk) {
+		SDLogger.setLogToDisk(logToDisk);
+	}
+
+	/**
      * Required. Set the tag that will always show. Usually your application name.
      * @param applicationTag
      */

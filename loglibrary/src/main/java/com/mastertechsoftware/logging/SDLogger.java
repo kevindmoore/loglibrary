@@ -19,6 +19,7 @@ public class SDLogger {
     private static String directory;
     private static String logFile = "Log.txt";
     private static boolean logFileSet = false;
+    private static boolean logToDisk = true;
     protected static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm", Locale.US);
 	protected static int error_file_size = -1; // Unlimited
 	protected static int application_log_lines = -1; // Unlimited
@@ -34,12 +35,23 @@ public class SDLogger {
         directory += LOG_DIRECTORY;
     }
 
-    /**
+	/**
+	 * Turn disk logging on/off
+	 * @param logToDisk
+	 */
+	public static void setLogToDisk(boolean logToDisk) {
+		SDLogger.logToDisk = logToDisk;
+	}
+
+	/**
 	 * Write the stack trace and msg
 	 * @param msg
 	 * @param e
 	 */
     public static void error(String msg, Throwable e) {
+		if (!logToDisk) {
+			return;
+		}
         initFile();
         if (sdFile != null ) {
             try {
@@ -152,6 +164,7 @@ public class SDLogger {
                     File dir = new File(path);
                     if (!dir.exists() && !dir.mkdir()) {
                         Log.e("SDLogger", "Could not create directory " + dir.getAbsolutePath());
+						sdFile = null;
                         return;
                     }
                 }
@@ -159,9 +172,11 @@ public class SDLogger {
 					boolean created = sdFile.createNewFile();
 					if (!created) {
 						Log.e("SDLogger", "Could not create  " + sdFile.getAbsolutePath());
+						sdFile = null;
 					}
 				} catch (IOException e) {
                     Log.e("SDLogger", "Could not create file " + sdFile.getAbsolutePath());
+					sdFile = null;
                 }
             }
         } else if (error_file_size != -1) {
