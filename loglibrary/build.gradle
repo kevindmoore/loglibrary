@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
+def currentVersion = "1.2"
+
 android {
     compileSdkVersion parent.ext.androidCompileSdkVersion
     buildToolsVersion parent.ext.androidBuildToolsVersion
@@ -9,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion parent.ext.androidMinSdkVersion
         targetSdkVersion parent.ext.androidTargetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName currentVersion
     }
     buildTypes {
         release {
@@ -60,7 +62,7 @@ install {
             packaging 'aar'
             groupId 'com.mastertechsoftware.logging'
             artifactId 'loglibrary'
-            version '1.0.0'
+            version currentVersion
 
             licenses {
                 license {
@@ -86,7 +88,7 @@ install {
 
 
 group = 'com.mastertechsoftware.logging'
-version = '1.0.0'
+version = currentVersion
 
 bintray {
     user = parent.ext.bintray_user

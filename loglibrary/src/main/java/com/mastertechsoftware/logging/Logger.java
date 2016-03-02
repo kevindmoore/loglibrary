@@ -138,6 +138,26 @@ public class Logger {
 		SDLogger.setLogToDisk(logToDisk);
 	}
 
+	public static void setSDFileSize(int file_size) {
+		SDLogger.setSDFileSize(file_size);
+	}
+
+	public static void setDirectory(String directory) {
+		SDLogger.setDirectory(directory);
+	}
+
+	public static void setLogFile(String logFile) {
+		SDLogger.setLogFile(logFile);
+	}
+
+	public static void setApplicationLogLines(int application_log_lines) {
+		SDLogger.setApplicationLogLines(application_log_lines);
+	}
+
+	public static void setMaxLogLines(int system_log_lines) {
+		SDLogger.setMaxLogLines(system_log_lines);
+	}
+
 	/**
      * Required. Set the tag that will always show. Usually your application name.
      * @param applicationTag
