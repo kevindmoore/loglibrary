@@ -95,7 +95,7 @@ public class Logger {
 							category.setEnabled(false);
 						}
 					}
-					classCategoryMap.put(category.getName(), category);
+					addCategory(category);
 				}
 			}
 			if (jsonData.has(CLASSES)) {
@@ -122,12 +122,28 @@ public class Logger {
 							classInfo.setEnabled(false);
 						}
 					}
-					classInfoHashMap.put(classInfo.getClassName(), classInfo);
+					addClassInfo(classInfo);
 				}
 			}
 		} catch (JSONDataException e) {
-			e.printStackTrace();
+			Log.e("Logger", "Invalid Logging Setup File. ", e);
 		}
+	}
+
+	/**
+	 * Add a new ClassInfo object
+	 * @param classInfo
+	 */
+	public static void addClassInfo(ClassInfo classInfo) {
+		classInfoHashMap.put(classInfo.getClassName(), classInfo);
+	}
+
+	/**
+	 * Add a new category
+	 * @param category
+	 */
+	public static void addCategory(Category category) {
+		classCategoryMap.put(category.getName(), category);
 	}
 
 	/**

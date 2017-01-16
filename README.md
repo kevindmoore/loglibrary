@@ -4,16 +4,17 @@ This library will make logging easier and add some extra functionality, such as 
 ## Usuage
 To start using the library add the following to your build.gradle file (not the root file):  
 ```
-    compile "com.mastertechsoftware.logging:loglibrary:1.0.0"
+    compile "com.mastertechsoftware.logging:loglibrary:1.0.2"
 ```
 ### Initialization
-Initialization should happen as soon as possible, usually the Application class. You can call individual static methods or use a json configuration file.
-### Individual Initialization
+Initialization should happen as soon as possible, usually in the Application class. You can call individual static methods or use a json configuration file.
+### Individual Initialization (All Optional)
 1. SDLogger.setLogFile(String logfileName) - Sets the name of the external log file.
-2. setApplicationTag(String tag) - Tag that the application will use. No need use tag in each call.
+2. setApplicationTag(String tag) - Tag that the application will use. Now you don't need to use tag in each call.
 3. setSDFileSize - Maximum size of log file
 4. setApplicationLogLines - maximum number of application lines to print in stack traces
 5. setMaxLogLines - Maximum number of log lines to print
+6. addCategory - Add a category class 
 
 ### Configuration File
 Example:   
