@@ -157,18 +157,18 @@ public class SDLogger {
         if (sdFile == null) {
             sdFile = new File(directory + logFile);
             if (!sdFile.exists()) {
-                java.util.StringTokenizer tokenizer = new java.util.StringTokenizer(directory, "/");
-                String path = "";
-                while (tokenizer.hasMoreTokens()) {
-                    path += "/" + tokenizer.nextToken();
-                    File dir = new File(path);
-                    if (!dir.exists() && !dir.mkdir()) {
-                        Log.e("SDLogger", "Could not create directory " + dir.getAbsolutePath());
-						sdFile = null;
-                        return;
-                    }
-                }
-                try {
+				try {
+					java.util.StringTokenizer tokenizer = new java.util.StringTokenizer(directory, "/");
+					String path = "";
+					while (tokenizer.hasMoreTokens()) {
+						path += "/" + tokenizer.nextToken();
+						File dir = new File(path);
+						if (!dir.exists() && !dir.mkdir()) {
+							Log.e("SDLogger", "Could not create directory " + dir.getAbsolutePath());
+							sdFile = null;
+							return;
+						}
+					}
 					boolean created = sdFile.createNewFile();
 					if (!created) {
 						Log.e("SDLogger", "Could not create  " + sdFile.getAbsolutePath());
@@ -181,12 +181,12 @@ public class SDLogger {
             }
         } else if (error_file_size != -1) {
 			if (sdFile.length() > error_file_size) {
-				boolean deleted = sdFile.delete();
-				if (!deleted) {
-					Log.e("SDLogger", "Could not delete  " + sdFile.getAbsolutePath());
-					return;
-				}
 				try {
+					boolean deleted = sdFile.delete();
+					if (!deleted) {
+						Log.e("SDLogger", "Could not delete  " + sdFile.getAbsolutePath());
+						return;
+					}
 					boolean created = sdFile.createNewFile();
 					if (!created) {
 						Log.e("SDLogger", "Could not create  " + sdFile.getAbsolutePath());

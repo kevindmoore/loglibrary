@@ -418,7 +418,24 @@ public class Logger {
     /**
      * Log a debug message.
      */
-    public static void debug(Object caller, String message) {
+
+    // Simple boolean to short circuit logging
+	public static void debug(boolean logDebug, String message) {
+		if (!logDebug) {
+			return;
+		}
+		debug(applicationTag, message);
+	}
+
+	public static void debug(String message) {
+		debug(applicationTag, message);
+	}
+
+	public static void debug(String message, Object... args) {
+		debug(applicationTag, parseMessage(message, args));
+	}
+
+	public static void debug(Object caller, String message) {
 		debugLocal(TYPE.DEBUG, applicationTag, getSimpleName(caller), message);
     }
 
@@ -563,14 +580,6 @@ public class Logger {
 			}
 		}
 		return false;
-	}
-
-	public static void debug(String message) {
-        debug(applicationTag, message);
-    }
-
-	public static void debug(String message, Object... args) {
-        debug(applicationTag, parseMessage(message, args));
 	}
 
 	public static void debugNow(String message) {
